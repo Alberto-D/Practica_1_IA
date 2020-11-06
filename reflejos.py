@@ -44,6 +44,7 @@ def actuate(mapa, posi, to_clean):
 		if (mapa[posi.x][posi.y]=='1'):
 			mapa[posi.x][posi.y]=0
 			to_clean-=1
+		print("suck")
 	elif(action == 5): #Nada
 		print(" ")
 
@@ -108,17 +109,14 @@ def main():
 	posi = Position(2,3)
 	print("Initial position: <",sep='',end = '')
 	percive(Map, posi)
-	a =0
 	while( to_clean >0):
 		print("To clean: ", to_clean)
 		print("State: <",sep='',end = '')
 		percive(Map, posi)
-		left = actuate(Map,posi, to_clean)
-		to_clean = left		
-		sleep(0.1)
+		to_clean = actuate(Map,posi, to_clean)
+		
 
-
-
+	print()
 
 	
 
