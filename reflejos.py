@@ -26,31 +26,63 @@ def can_move(mapa, x, y):
 def actuate(mapa, posi, to_clean):
 	x1=0
 	y1=0
-	Suck = 0
-	action = randrange(6)
-	if(action == 0): #Arriba
-		print( "^")
-		y1+=1
-	elif(action == 1):#Abajo
-		print("v")
-		y1-=1
-	elif(action == 2):#Derecha
-		print(">")
-		x1+=1
-	elif(action == 3):#Izquierda
-		print("<")
-		x1-=1
-	elif(action == 4):#Chupar
-		if (mapa[posi.x][posi.y]=='1'):
+	if (mapa[posi.x][posi.y]=='1'):
 			mapa[posi.x][posi.y]=0
 			to_clean-=1
-		print("suck")
-	elif(action == 5): #Nada
-		print(" ")
+			print("suck")
+	else:
+		if((posi.x==0 and posi.y==4) or (posi.x==1 and (posi.y==3 or posi.y==4))):
+			print("Esquina 1")
+			x1+=1
+		elif((posi.x==4 and (posi.y==4 or posi.y==3)) or (posi.x==3 and posi.y==3)):
+			y1-=1
+			print("Esquina 2")
+		elif(((posi.x==4 or posi.x==3) and posi.y==0) or (posi.x==3 and posi.y==1)):
+			x1-=1
+			print("Esquina 3")
+		elif((posi.x==1 and (posi.y==0 or posi.y==1)) or (posi.x==1 and posi.y==1)):
+			y1+=1
+			print("Esquina 4")
 
-	if(can_move(mapa,posi.x+x1,posi.y+y1)):
-		posi.x=x1 + posi.x
-		posi.y=y1 + posi.y
+		elif(posi.x==0 or posi.x==1 ):
+			y1+=1
+			print( "^")
+		elif(posi.y==4 or posi.y==3):
+			x1+=1
+			print(">")
+		elif(posi.x==4 or posi.x==3):
+			y1-=1
+			print("v")
+		elif(posi.y==0 or posi.y==1):
+			x1-=1
+			print("<")
+		
+		if not (can_move(mapa,posi.x+x1,posi.y+y1)):
+			print("NO PUEDORL")
+			x1=0
+			y1=0
+
+			action = randrange(4)
+			if(action==0): #Arriba
+				print( "^")
+				y1+=1
+				x1+=1
+			elif(action==1):#Abajo
+				print("v")
+				x1+=1
+				y1-=1
+			elif(action==2):#Derecha
+				print(">")
+				x1-=1
+				y1+=1
+			elif(action==3):#Izquierda
+				print("<")
+				x1-=1
+				y1-=1
+
+		if(can_move(mapa,posi.x+x1,posi.y+y1)):
+			posi.x=x1 + posi.x
+			posi.y=y1 + posi.y
 	return to_clean
 	
 
@@ -106,7 +138,7 @@ def main():
 	
 	print(Map[2][0])
 	print("To clean: ", to_clean)
-	posi = Position(2,3)
+	posi = Position(0,0)
 	print("Initial position: <",sep='',end = '')
 	percive(Map, posi)
 	while( to_clean >0):
@@ -114,7 +146,7 @@ def main():
 		print("State: <",sep='',end = '')
 		percive(Map, posi)
 		to_clean = actuate(Map,posi, to_clean)
-		
+		sleep(0.5)
 
 	print()
 

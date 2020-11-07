@@ -115,8 +115,7 @@ def main():
 		percive(Map, posi)
 		left = actuate(Map,posi, to_clean)
 		to_clean = left		
-		sleep(0.1)
-
+	print()
 
 
 
