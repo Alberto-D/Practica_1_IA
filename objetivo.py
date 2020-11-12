@@ -17,6 +17,7 @@ class Agente:
 		self.mapa = mapa_agente
 
 
+
 def can_move(mapa, x, y):
 	max_x = len(mapa)
 	max_y = len(mapa[0])
@@ -32,14 +33,36 @@ def all_clear(agent):
 				limpio = False
 	return limpio
 
+def stuck(anteriores):
+	if(anteriores[1][4]==anteriores[1][3]==anteriores[1][2] and anteriores[0][4]==anteriores[0][3]==anteriores[0][2]):
+		return True
+	return False
+	
 def actuate(mapa, agent, anteriores):
 	x1=0
 	y1=0
 	if (mapa[agent.x][agent.y]=='1'):
 		mapa[agent.x][agent.y]=0
 		print("suck")
-
+	elif(agent.x+1<=4 and agent.mapa[agent.x+1][agent.y]=='1'):
+		x1+=1
+	elif(agent.x-1>=0 and agent.mapa[agent.x-1][agent.y]=='1'):
+		x1-=1
+	elif(agent.y+1<=4 and agent.mapa[agent.x][agent.y+1]=='1'):
+		y1+=1
+	elif(agent.y-1>=0 and agent.mapa[agent.x][agent.y-1]=='1'):
+		y1-=1
 	else:
+		if(((agent.x+1 < 4) and (agent.mapa[agent.x+2][agent.y]==8)) and (agent.mapa[agent.x+1][agent.y]!='X')):
+			x1+=1
+		elif(((agent.y+1 < 4) and (agent.mapa[agent.x][agent.y+2]==8)) and (agent.mapa[agent.x][agent.y+1]!='X')):
+			y1+=1
+		elif(((agent.x-1 >= 0) and (agent.mapa[agent.x-2][agent.y]==8)) and (agent.mapa[agent.x-1][agent.y]!='X')):
+			x1-=1
+		elif(((agent.y-1 >= 0) and (agent.mapa[agent.x][agent.y-2]==8)) and (agent.mapa[agent.x][agent.y-1]!='X')):
+			y1-=1
+
+	if (stuck(anteriores)):
 		action = randrange(4)
 		if(action == 0): #Arriba
 			print( "aleatorio^")
@@ -63,6 +86,10 @@ def actuate(mapa, agent, anteriores):
 	if(all_clear(agent)):
 		print("Acabado")
 		return(1, agent.x, agent.y)
+
+	
+	
+		
 	return (0, agent.x, agent.y)
 
 
@@ -145,6 +172,10 @@ def main():
 			print(" ")
 		sleep(0.5)
 	print()
+
+
+
+
 
 
 # Standard boilerplate to call the main() function to begin

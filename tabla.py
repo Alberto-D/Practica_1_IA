@@ -1,27 +1,3 @@
-#!/usr/bin/python3
-import sys
-from random import randrange
-
-from time import sleep
-
-import random
-import copy
-import collections
-import numbers
-
-
-class Position:
-	def __init__(self,x_pos,y_pos):
-		self.x = x_pos
-		self.y = y_pos
-
-def can_move(mapa, x, y):
-	max_x = len(mapa)
-	max_y = len(mapa[0])
-	if(x<0 or x>=max_x or y<0 or y>=max_y or mapa[x][y]=='X'):
-		return False
-	return True
-
 
 def actuate(mapa, posi, to_clean):
 	x1=0
@@ -80,7 +56,7 @@ def percive(mapa, posi):
 		# llamar a accion, creo un num aletorio y devuelve la posicion modificada (si se ha modificado) y la accion aleatoria que se ha hecho
 		# 
 	print(posi.x,",", posi.y,">  Perception : <",currPos,",",izda,",",arriba,",",dcha,",",abajo,">","Action: ", sep='', end = '')
-
+	return(posi.x,posi.y, )
 
 
 def main():
@@ -109,6 +85,41 @@ def main():
 	percive(Map, posi)
 	a =0
 	iteraciones = 0;
+
+
+
+	#creo la tabla
+	tabla = {}
+	cosas = [0,1,'X']
+
+	for a in cosas:
+		for b in cosas:
+			for c in cosas:
+				for d in cosas:
+					for e in cosas:
+						if (e == 'X'):
+							print("eso no se puede")
+						elif (e == 1):
+							tabla[a,b,c,d,e] = Suck
+						elif (a == 1):
+							tabla[a,b,c,d,e] = izquierda
+						elif (b == 1):
+							tabla[a,b,c,d,e] = arriba
+						elif (c == 1):
+							tabla[a,b,c,d,e] = derecha
+						elif (d == 1):
+							tabla[a,b,c,d,e] = abajo
+
+						elif (a == 0 or a == 'X'):
+							tabla[a,b,c,d,e] = derecha
+						elif (b == 0 or b == 'X'):
+							tabla[a,b,c,d,e] = arriba
+						elif (c == 0 or c == 'X'):
+							tabla[a,b,c,d,e] = derecha
+						elif (d == 0 or d == 'X'):
+							tabla[a,b,c,d,e] = abajo
+						
+
 	while( iteraciones < 15):
 		print("To clean: ", to_clean)
 		print("State: <",sep='',end = '')

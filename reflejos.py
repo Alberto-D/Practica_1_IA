@@ -30,6 +30,16 @@ def actuate(mapa, posi, to_clean):
 			mapa[posi.x][posi.y]=0
 			to_clean-=1
 			print("suck")
+
+	elif(agent.x+1<=4 and agent.mapa[agent.x+1][agent.y]=='1'):
+		x1+=1
+	elif(agent.x-1>=0 and agent.mapa[agent.x-1][agent.y]=='1'):
+		x1-=1
+	elif(agent.y+1<=4 and agent.mapa[agent.x][agent.y+1]=='1'):
+		y1+=1
+	elif(agent.y-1>=0 and agent.mapa[agent.x][agent.y-1]=='1'):
+		y1-=1
+		
 	else:
 		if((posi.x==0 and posi.y==4) or (posi.x==1 and (posi.y==3 or posi.y==4))):
 			print("Esquina 1")
@@ -141,11 +151,13 @@ def main():
 	posi = Position(0,0)
 	print("Initial position: <",sep='',end = '')
 	percive(Map, posi)
-	while( to_clean >0):
+	iteraciones = 0;
+	while( iteraciones < 15):
 		print("To clean: ", to_clean)
 		print("State: <",sep='',end = '')
 		percive(Map, posi)
 		to_clean = actuate(Map,posi, to_clean)
+		iteraciones+=1  ##Lo ejecuto 15 veces, si quiero hacerlo hasta que acabe uso el toclean en el while
 		sleep(0.5)
 
 	print()
